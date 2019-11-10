@@ -4,15 +4,18 @@
     "watch": "webpack --mode=development --watch"
   },
   "dependencies": {
+    "emotion": "^10.0.23",
+    "htm": "^2.2.1",
+    "preact": "^10.0.4",
     "webext-options-sync": "^1.0.0",
     "webextension-polyfill": "^0.5.0"
   },
   "devDependencies": {
     "@types/chrome": "0.0.91",
-    "webpack": "^4.41.2",
-    "webpack-cli": "^3.3.10",
-    "copy-webpack-plugin": "^5.0.4",
+    "copy-webpack-plugin": "^5.0.5",
+    "size-plugin": "^2.0.1",
     "terser-webpack-plugin": "^2.2.1",
-    "size-plugin": "^2.0.1"
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.10"
   }
 }

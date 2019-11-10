@@ -26,6 +26,7 @@ async function handleLastModified(newLastModified) {
 
 async function getNotificationCount() {
   const data = await getNotificationResponse()
+  await localStore.set('unreadCount', data.count)
 
   return data
 }
