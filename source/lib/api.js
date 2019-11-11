@@ -17,7 +17,7 @@ async function getApiToken() {
   return result.groups.token
 }
 
-async function postNotification(token) {
+export async function postNotification(token) {
   const formData = new FormData()
   formData.append('_method', 'PUT')
 
@@ -38,7 +38,6 @@ export async function getNotification() {
     }
   })
   const json = await response.json()
-  await postNotification(token)
 
   return json
 }

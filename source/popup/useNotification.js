@@ -1,12 +1,13 @@
 import { useReducer, useEffect } from 'preact/hooks'
-import { getNotification } from '../lib/api'
+import { getNotification, postNotification } from '../lib/api'
+import { renderCount } from '../lib/badge'
 
 const NOTIFICATION_REQUEST = 'NOTIFICATION_REQUEST'
 const NOTIFICATION_SUCCESS = 'NOTIFICATION_SUCCESS'
 const NOTIFICATION_FAILURE = 'NOTIFICATION_FAILURE'
 
 function useNotification() {
-  const [notification, dispatch] = useReducer(
+  const [{ unreadCount, ...notification }, dispatch] = useReducer(
     (state, action) => {
       switch (action.type) {
         case NOTIFICATION_REQUEST:
@@ -32,6 +33,7 @@ function useNotification() {
     },
     {
       items: [],
+      unreadCount: 0,
       isFetching: false,
       errors: {}
     }
@@ -56,6 +58,18 @@ function useNotification() {
         })
       })
   }, [])
+
+  useEffect(() => {
+    if (unreadCount > 0) {
+      postNotification()
+        .then(() => {
+          renderCount(0)
+        })
+        .catch(error => {
+          console.error(error)
+        })
+    }
+  }, [unreadCount])
 
   return notification
 }
