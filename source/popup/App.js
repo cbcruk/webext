@@ -5,15 +5,15 @@ import Item from './Item'
 import Loading from './Loading'
 
 function App() {
-  const notification = useNotification()
+  const { isFetching, notifications } = useNotification()
 
   return html`
     <div class=${css(styles.container)}>
-      ${notification.isFetching
+      ${isFetching
         ? html`
             <${Loading} />
           `
-        : notification.items.map(
+        : notifications.map(
             item =>
               html`
                 <${Item} key=${item.id} ...${item} />

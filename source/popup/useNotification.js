@@ -18,7 +18,7 @@ function useNotification() {
         case NOTIFICATION_SUCCESS:
           return {
             ...state,
-            items: action.payload,
+            ...action.payload,
             isFetching: false
           }
         case NOTIFICATION_FAILURE:
@@ -32,7 +32,7 @@ function useNotification() {
       }
     },
     {
-      items: [],
+      notifications: [],
       unreadCount: 0,
       isFetching: false,
       errors: {}
@@ -48,7 +48,7 @@ function useNotification() {
       .then(response => {
         dispatch({
           type: NOTIFICATION_SUCCESS,
-          payload: response.notifications
+          payload: response
         })
       })
       .catch(error => {
