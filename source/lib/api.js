@@ -1,14 +1,14 @@
 const DEFAULT_HOST = 'https://ridibooks.com'
 const API_HOST = 'https://store-api.ridibooks.com'
 
-export async function getNotificationResponse() {
+export async function getNotificationUnreadCount() {
   const response = await fetch(`${DEFAULT_HOST}/api/notification/unread_count`)
-  const json = await response.json()
+  const data = await response.json()
 
-  return json
+  return data
 }
 
-async function getApiToken() {
+async function getBearerToken() {
   const pattern = /apiToken: '(?<token>\w.+)',/u
   const response = await fetch(`${DEFAULT_HOST}/notification`)
   const html = await response.text()
@@ -17,27 +17,28 @@ async function getApiToken() {
   return result.groups.token
 }
 
-export async function postNotification(token) {
+export async function postNotification(init) {
   const formData = new FormData()
   formData.append('_method', 'PUT')
 
   await fetch(`${API_HOST}/notification`, {
-    headers: {
-      authorization: `Bearer ${token}`
-    },
+    ...init,
     method: 'POST',
     body: formData
   })
 }
 
-export async function getNotification() {
-  const token = await getApiToken()
-  const response = await fetch(`${API_HOST}/notification`, {
-    headers: {
-      authorization: `Bearer ${token}`
-    }
-  })
-  const json = await response.json()
+export async function getNotification(limit = 5) {
+  const token = await getBearerToken()
+  const init = {
+    headers: { authorization: `Bearer ${token}` }
+  }
+  const response = await fetch(`${API_HOST}/notification?limit=${limit}`, init)
+  const data = await response.json()
 
-  return json
+  if (data.unreadCount > 0) {
+    await postNotification(init)
+  }
+
+  return data
 }

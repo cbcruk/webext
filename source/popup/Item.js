@@ -3,9 +3,14 @@ import { css } from 'emotion'
 
 function Item({ imageUrl, imageType, landingUrl, message, strCreatedAt }) {
   const isBook = imageType === 'book'
+  const hostName = landingUrl.startsWith('/') ? 'https://ridibooks.com' : ''
 
   return html`
-    <a class=${css(styles.container)} href=${landingUrl} target="_blank">
+    <a
+      class=${css(styles.container)}
+      href=${hostName + landingUrl}
+      target="_blank"
+    >
       <img
         src="https:${imageUrl}"
         alt=""

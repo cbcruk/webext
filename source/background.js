@@ -1,7 +1,7 @@
 import { renderWarning, renderCount, renderError } from './lib/badge'
 import localStore from './lib/local-store'
 import { openTab } from './lib/tabs-service'
-import { getNotificationResponse } from './lib/api'
+import { getNotificationUnreadCount } from './lib/api'
 
 async function scheduleNextAlarm(interval) {
   const intervalSetting = (await localStore.get('interval')) || 60
@@ -25,7 +25,7 @@ async function handleLastModified(newLastModified) {
 }
 
 async function getNotificationCount() {
-  const data = await getNotificationResponse()
+  const data = await getNotificationUnreadCount()
   await localStore.set('unreadCount', data.count)
 
   return data
