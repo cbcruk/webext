@@ -2,6 +2,7 @@ import { renderWarning, renderCount, renderError } from './lib/badge'
 import localStore from './lib/local-store'
 import { openTab } from './lib/tabs-service'
 import { getNotificationUnreadCount } from './lib/api'
+import { renderIcon } from './lib/icon'
 
 async function scheduleNextAlarm(interval) {
   const intervalSetting = (await localStore.get('interval')) || 60
@@ -32,15 +33,15 @@ async function getNotificationCount() {
 }
 
 async function updateNotificationCount() {
-  const { count, success } = await getNotificationCount()
-
-  renderCount(count)
-
-  if (!success) {
-    renderError()
-  }
+  const { count, reason, success } = await getNotificationCount()
 
   scheduleNextAlarm()
+
+  if (!success) {
+    return reason
+  }
+
+  renderCount(count)
   handleLastModified()
 }
 
@@ -55,7 +56,9 @@ async function handleBrowserActionClick() {
 function handleError(error) {
   scheduleNextAlarm()
 
-  renderError(error)
+  if (error) {
+    renderError(error)
+  }
 }
 
 function handleOfflineStatus() {
@@ -65,7 +68,11 @@ function handleOfflineStatus() {
 async function update() {
   if (navigator.onLine) {
     try {
-      await updateNotificationCount()
+      const hasReason = await updateNotificationCount()
+
+      if (!hasReason) {
+        renderIcon()
+      }
     } catch (error) {
       handleError(error)
     }
