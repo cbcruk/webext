@@ -71,7 +71,7 @@ async function update() {
       const hasReason = await updateNotificationCount()
 
       if (!hasReason) {
-        renderIcon()
+        renderIcon(hasReason)
       }
     } catch (error) {
       handleError(error)

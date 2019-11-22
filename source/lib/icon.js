@@ -1,5 +1,7 @@
-export function renderIcon() {
+const icons = ['icon-toolbar-gray', 'icon-toolbar']
+
+export function renderIcon(isDisabled) {
   browser.browserAction.setIcon({
-    path: 'icon-toolbar.png'
+    path: `${icons[~~isDisabled]}.png`
   })
 }
