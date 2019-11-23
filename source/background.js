@@ -28,19 +28,22 @@ async function handleLastModified(newLastModified) {
 async function getNotificationCount() {
   const data = await getNotificationUnreadCount()
   await localStore.set('unreadCount', data.count)
+  await localStore.set('success', data.success)
 
   return data
 }
 
 async function updateNotificationCount() {
-  const { count, reason, success } = await getNotificationCount()
+  const { count, success } = await getNotificationCount()
 
   scheduleNextAlarm()
 
   if (!success) {
-    return reason
+    renderIcon('default')
+    return
   }
 
+  renderIcon('active')
   renderCount(count)
   handleLastModified()
 }
@@ -68,11 +71,7 @@ function handleOfflineStatus() {
 async function update() {
   if (navigator.onLine) {
     try {
-      const hasReason = await updateNotificationCount()
-
-      if (!hasReason) {
-        renderIcon(hasReason)
-      }
+      await updateNotificationCount()
     } catch (error) {
       handleError(error)
     }
