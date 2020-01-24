@@ -1,8 +1,8 @@
 import { html } from 'htm/preact'
 import { css } from 'emotion'
 import useNotification from './useNotification'
-import Item from './Item'
 import Loading from './Loading'
+import Notifications from './Notifications'
 
 function App() {
   const { isFetching, notifications } = useNotification()
@@ -13,12 +13,9 @@ function App() {
         ? html`
             <${Loading} />
           `
-        : notifications.map(
-            item =>
-              html`
-                <${Item} key=${item.id} ...${item} />
-              `
-          )}
+        : html`
+            <${Notifications} notifications="${notifications}" />
+          `}
     </div>
   `
 }
