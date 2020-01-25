@@ -3,6 +3,7 @@ import localStore from './lib/local-store'
 import { openTab } from './lib/tabs-service'
 import { getNotificationUnreadCount } from './lib/api'
 import { renderIcon } from './lib/icon'
+import { UPDATE_AUTHORIZATION } from './auth'
 
 async function scheduleNextAlarm(interval) {
   const intervalSetting = (await localStore.get('interval')) || 60
@@ -88,6 +89,16 @@ function handleConnectionStatus() {
   }
 }
 
+async function handleMessage(request) {
+  switch (request.type) {
+    case UPDATE_AUTHORIZATION:
+      await updateAuthorization(request.isLogin)
+      break
+    default:
+      break
+  }
+}
+
 async function init() {
   window.addEventListener('online', handleConnectionStatus)
   window.addEventListener('offline', handleConnectionStatus)
@@ -96,6 +107,7 @@ async function init() {
   browser.alarms.create({ when: Date.now() + 2000 })
 
   browser.browserAction.onClicked.addListener(handleBrowserActionClick)
+  browser.runtime.onMessage.addListener(update)
 
   update()
 }

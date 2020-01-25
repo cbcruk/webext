@@ -9,7 +9,8 @@ module.exports = {
   entry: {
     background: './source/background',
     options: './source/options',
-    popup: './source/popup'
+    popup: './source/popup',
+    auth: './source/auth'
   },
   output: {
     path: path.join(__dirname, 'distribution'),
