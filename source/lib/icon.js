@@ -1,12 +1,14 @@
+import browser from 'webextension-polyfill'
+
 export const icons = new Map([
   ['active', 'icon-toolbar'],
   ['default', 'icon-toolbar-gray']
 ])
 
-export function renderIcon(type) {
+export async function renderIcon(type) {
   const imageName = icons.get(type)
 
-  browser.browserAction.setIcon({
+  await browser.browserAction.setIcon({
     path: `${imageName}.png`
   })
 }

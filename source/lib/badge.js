@@ -1,3 +1,4 @@
+import browser from 'webextension-polyfill'
 import * as defaults from './defaults'
 
 function getCountString(count) {

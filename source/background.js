@@ -1,3 +1,4 @@
+import browser from 'webextension-polyfill'
 import { renderWarning, renderCount, renderError } from './lib/badge'
 import localStore from './lib/local-store'
 import { openTab } from './lib/tabs-service'
