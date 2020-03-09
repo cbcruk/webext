@@ -1,8 +1,8 @@
 import { html, render } from 'htm/preact'
 import { injectGlobal } from 'emotion'
 import App from './popup/App'
-import localStore from './lib/local-store'
-import { openTab } from './lib/tabs-service'
+import localStore from '@cbcruk/webext-lib/local-store'
+import { openTab } from '@cbcruk/webext-lib/tabs-service'
 
 async function init() {
   const isSuccess = await localStore.get('success')

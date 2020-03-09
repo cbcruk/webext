@@ -1,7 +1,7 @@
 import { useReducer, useEffect } from 'preact/hooks'
-import { getNotification } from '../lib/api'
-import { renderCount } from '../lib/badge'
-import localStore from '../lib/local-store'
+import { renderCount } from '@cbcruk/webext-lib/badge'
+import localStore from '@cbcruk/webext-lib/local-store'
+import { getNotification } from '../api'
 
 const NOTIFICATION_REQUEST = 'NOTIFICATION_REQUEST'
 const NOTIFICATION_SUCCESS = 'NOTIFICATION_SUCCESS'

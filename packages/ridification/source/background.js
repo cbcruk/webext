@@ -1,9 +1,13 @@
 import browser from 'webextension-polyfill'
-import { renderWarning, renderCount, renderError } from './lib/badge'
-import localStore from './lib/local-store'
-import { openTab } from './lib/tabs-service'
-import { getNotificationUnreadCount } from './lib/api'
-import { renderIcon } from './lib/icon'
+import {
+  renderWarning,
+  renderCount,
+  renderError
+} from '@cbcruk/webext-lib/badge'
+import localStore from '@cbcruk/webext-lib/local-store'
+import { openTab } from '@cbcruk/webext-lib/tabs-service'
+import { renderIcon } from '@cbcruk/webext-lib/icon'
+import { getNotificationUnreadCount } from './api'
 import { UPDATE_AUTHORIZATION } from './auth'
 
 async function scheduleNextAlarm(interval) {
