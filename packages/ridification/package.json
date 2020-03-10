@@ -8,20 +8,9 @@
     "postbuild": "cd distribution && web-ext build --overwrite-dest"
   },
   "dependencies": {
-    "@cbcruk/webext-lib": "0.0.0",
-    "emotion": "^10.0.27",
-    "htm": "^3.0.1",
-    "preact": "^10.2.1",
-    "web-ext": "^4.0.0",
-    "webext-options-sync": "^1.2.2",
-    "webextension-polyfill": "^0.6.0"
+    "@cbcruk/webext-lib": "0.0.0"
   },
   "devDependencies": {
-    "@types/chrome": "0.0.92",
-    "copy-webpack-plugin": "^5.1.1",
-    "size-plugin": "^2.0.1",
-    "terser-webpack-plugin": "^2.3.2",
-    "webpack": "^4.41.5",
-    "webpack-cli": "^3.3.10"
+    "@cbcruk/webext-build": "0.0.0"
   }
 }

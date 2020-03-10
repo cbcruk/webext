@@ -22,7 +22,10 @@ export const warningTitles = new Map([
   ['offline', 'No Internet connnection']
 ])
 
-export const warningSymbols = new Map([['default', 'warn'], ['offline', 'off']])
+export const warningSymbols = new Map([
+  ['default', 'warn'],
+  ['offline', 'off']
+])
 
 export const colors = new Map([
   ['default', [3, 102, 214, 255]],
@@ -62,4 +65,4 @@ export function getNotificationReasonText(reason) {
   return notificationReasons.get(reason) || ''
 }
 
-export const defaultTitle = 'Notifier for ridibooks'
+export const defaultTitle = ''

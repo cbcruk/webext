@@ -2,5 +2,16 @@
   "private": true,
   "workspaces": [
     "packages/*"
-  ]
+  ],
+  "dependencies": {
+    "webextension-polyfill": "^0.6.0",
+    "emotion": "^10.0.27",
+    "htm": "^3.0.1",
+    "preact": "^10.2.1"
+  },
+  "devDependencies": {
+    "webpack": "^4.41.5",
+    "webpack-cli": "^3.3.10",
+    "web-ext": "^4.0.0"
+  }
 }

@@ -1,0 +1,10 @@
+{
+  "name": "@cbcruk/webext-build",
+  "version": "0.0.0",
+  "devDependencies": {
+    "copy-webpack-plugin": "^5.1.1",
+    "size-plugin": "^2.0.1",
+    "terser-webpack-plugin": "^2.3.2",
+    "webpack-merge": "^4.2.2"
+  }
+}
