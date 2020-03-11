@@ -5,10 +5,17 @@ export const icons = new Map([
   ['default', 'icon-toolbar-gray']
 ])
 
+const statusMap = new Map()
+
 export async function renderIcon(type) {
   const imageName = icons.get(type)
+  const prevStatus = statusMap.get('status')
 
-  await browser.browserAction.setIcon({
-    path: `${imageName}.png`
-  })
+  if (prevStatus !== type) {
+    await browser.browserAction.setIcon({
+      path: `${imageName}.png`
+    })
+
+    statusMap.set('status', type)
+  }
 }
