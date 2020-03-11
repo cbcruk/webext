@@ -1,0 +1,16 @@
+{
+  "private": true,
+  "name": "cafeed",
+  "version": "1.0.0",
+  "scripts": {
+    "watch": "webpack --mode=development --watch",
+    "build": "webpack --mode=production",
+    "postbuild": "cd distribution && web-ext build --overwrite-dest"
+  },
+  "dependencies": {
+    "@cbcruk/webext-lib": "0.0.0"
+  },
+  "devDependencies": {
+    "@cbcruk/webext-build": "0.0.0"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "name": "Notifier for Cafe",
+  "version": "1.0.0",
+  "description": "Displays your cafe notifications unread count",
+  "homepage_url": "https://github.com/cbcruk/webext",
+  "manifest_version": 2,
+  "icons": {
+    "128": "icon.png"
+  },
+  "permissions": [
+    "alarms",
+    "storage",
+    "notifications",
+    "tabs",
+    "cookies",
+    "*://*.naver.com/"
+  ],
+  "background": {
+    "persistent": false,
+    "scripts": ["background.js"]
+  },
+  "browser_action": {
+    "default_icon": "icon-toolbar-gray.png",
+    "default_title": "cafe",
+    "default_popup": "popup.html"
+  }
+}
