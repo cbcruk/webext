@@ -8,7 +8,8 @@
     "postbuild": "cd distribution && web-ext build --overwrite-dest"
   },
   "dependencies": {
-    "@cbcruk/webext-lib": "0.0.0"
+    "@cbcruk/webext-lib": "0.0.0",
+    "lodash": "^4.17.15"
   },
   "devDependencies": {
     "@cbcruk/webext-build": "0.0.0"

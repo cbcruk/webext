@@ -1,5 +1,6 @@
 import { html } from 'htm/preact'
 import { css, cx } from 'emotion'
+import get from 'lodash/get'
 import { Time, Comment } from './Icon'
 import { status } from './Feed/constants'
 import styles from './Feed/styles'
@@ -22,6 +23,7 @@ function Feed({
     new RegExp(feedConfigValue, 'i'),
     match => `<mark>${match}</mark>`
   )
+  const mobileImageUrl = get(representImage, 'mobileImageUrl', '')
 
   return html`
     <a
@@ -47,9 +49,12 @@ function Feed({
           </div>
         </div>
       </div>
-      <div class=${css(styles.media)}>
-        <img src=${representImage.mobileImageUrl} alt="" />
-      </div>
+      ${mobileImageUrl &&
+        html`
+          <div class=${css(styles.media)}>
+            <img src=${mobileImageUrl} alt="" />
+          </div>
+        `}
     </a>
   `
 }
