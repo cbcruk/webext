@@ -1,8 +1,9 @@
 const merge = require('@cbcruk/webext-build/merge')
 
-module.exports = merge({
-  entry: {
-    background: './source/background',
-    popup: './source/popup'
-  }
-})
+module.exports = (_env, { mode }) =>
+  merge(mode, {
+    entry: {
+      background: './source/background',
+      popup: './source/popup'
+    }
+  })

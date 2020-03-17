@@ -5,6 +5,7 @@
     "copy-webpack-plugin": "^5.1.1",
     "size-plugin": "^2.0.1",
     "terser-webpack-plugin": "^2.3.5",
+    "webpack-extension-reloader": "^1.1.4",
     "webpack-merge": "^4.2.2"
   }
 }

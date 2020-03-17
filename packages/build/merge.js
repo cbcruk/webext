@@ -1,45 +1,13 @@
-const path = require('path')
-const CopyWebpackPlugin = require('copy-webpack-plugin')
-const TerserPlugin = require('terser-webpack-plugin')
-const SizePlugin = require('size-plugin')
 const webpackMerge = require('webpack-merge')
+const common = require('./webpack.common')
+const dev = require('./webpack.dev')
+const prod = require('./webpack.prod')
 
-function merge(config) {
-  return webpackMerge(
-    {
-      devtool: 'sourcemap',
-      stats: 'errors-only',
-      output: {
-        path: path.join(process.cwd(), 'distribution'),
-        filename: '[name].js'
-      },
-      plugins: [
-        new SizePlugin(),
-        new CopyWebpackPlugin([
-          {
-            from: '**/*',
-            context: 'source',
-            ignore: ['*.js']
-          }
-        ])
-      ],
-      optimization: {
-        minimizer: [
-          new TerserPlugin({
-            terserOptions: {
-              mangle: false,
-              compress: false,
-              output: {
-                beautify: true,
-                indent_level: 2 // eslint-disable-line camelcase
-              }
-            }
-          })
-        ]
-      }
-    },
-    config
-  )
+function merge(mode, config) {
+  const isDevelopment = mode === 'development'
+  const devOrProd = isDevelopment ? dev : prod
+
+  return webpackMerge(common, devOrProd, config)
 }
 
 module.exports = merge
