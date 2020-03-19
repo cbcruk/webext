@@ -5,7 +5,6 @@ import {
   renderError
 } from '@cbcruk/webext-lib/badge'
 import localStore from '@cbcruk/webext-lib/local-store'
-import { openTab } from '@cbcruk/webext-lib/tabs-service'
 import { renderIcon } from '@cbcruk/webext-lib/icon'
 import { getNotificationUnreadCount } from './api'
 

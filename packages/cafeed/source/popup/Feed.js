@@ -7,9 +7,7 @@ import styles from './Feed/styles'
 
 function Feed({
   feedConfigValue,
-  menuName,
   subject,
-  content,
   formattedCost,
   formattedCommentCount,
   saleStatus,

@@ -8,7 +8,6 @@ import localStore from '@cbcruk/webext-lib/local-store'
 import { openTab } from '@cbcruk/webext-lib/tabs-service'
 import { renderIcon } from '@cbcruk/webext-lib/icon'
 import { getNotificationUnreadCount } from './api'
-import { UPDATE_AUTHORIZATION } from './auth'
 
 async function scheduleNextAlarm(interval) {
   const intervalSetting = (await localStore.get('interval')) || 60
@@ -91,16 +90,6 @@ function handleConnectionStatus() {
     update()
   } else {
     handleOfflineStatus()
-  }
-}
-
-async function handleMessage(request) {
-  switch (request.type) {
-    case UPDATE_AUTHORIZATION:
-      await updateAuthorization(request.isLogin)
-      break
-    default:
-      break
   }
 }
 

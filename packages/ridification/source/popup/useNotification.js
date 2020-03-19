@@ -41,6 +41,7 @@ function useNotification() {
   )
 
   useEffect(() => {
+    // eslint-disable-next-line no-extra-semi
     ;(async () => {
       try {
         const localUnreadCount = await localStore.get('unreadCount')

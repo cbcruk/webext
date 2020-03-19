@@ -1,3 +1,5 @@
+import browser from 'webextension-polyfill'
+
 export const UPDATE_AUTHORIZATION = 'UPDATE_AUTHORIZATION'
 
 function main() {
@@ -7,7 +9,7 @@ function main() {
     : { query: {} }
   const isLogin = NEXT_DATA.query.is_login === 'true'
 
-  chrome.runtime.sendMessage({
+  browser.runtime.sendMessage({
     type: UPDATE_AUTHORIZATION,
     isLogin
   })
