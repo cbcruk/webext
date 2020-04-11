@@ -58,8 +58,6 @@ function useNotification() {
             type: NOTIFICATION_SUCCESS,
             payload: response
           })
-
-          await localStore.set('notifications', response.notifications)
         } else {
           const notifications = (await localStore.get('notifications')) || []
 

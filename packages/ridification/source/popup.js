@@ -4,11 +4,19 @@ import App from './popup/App'
 import localStore from '@cbcruk/webext-lib/local-store'
 import { openTab } from '@cbcruk/webext-lib/tabs-service'
 
-async function init() {
+async function main() {
   const isSuccess = await localStore.get('success')
 
   if (!isSuccess) {
-    openTab('https://ridibooks.com/account/login')
+    await openTab('https://ridibooks.com/account/login')
+    return
+  }
+
+  const unreadCount = await localStore.get('unreadCount')
+  const notifications = await localStore.get('notifications')
+
+  if (unreadCount > 0 || !notifications) {
+    openTab('https://ridibooks.com/notification/?from=ext')
   } else {
     injectGlobal`
       *,
@@ -20,12 +28,8 @@ async function init() {
       }
     `
 
-    render(
-      html`
-        <${App} />
-      `,
-      document.getElementById('app')
-    )
+    render(html` <${App} /> `, document.getElementById('app'))
   }
 }
-init()
+
+main()

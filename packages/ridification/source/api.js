@@ -1,3 +1,5 @@
+import browser from 'webextension-polyfill'
+
 const DEFAULT_HOST = 'https://ridibooks.com'
 const API_HOST = 'https://store-api.ridibooks.com'
 
@@ -8,13 +10,21 @@ export async function getNotificationUnreadCount() {
   return data
 }
 
-async function getBearerToken() {
-  const pattern = /apiToken: '(?<token>\w.+)',/u
-  const response = await fetch(`${DEFAULT_HOST}/notification`)
-  const html = await response.text()
-  const result = pattern.exec(html)
+export async function getTokenByBrowserCookie() {
+  const { value } = await browser.cookies.get({
+    name: 'ridi_notification_token',
+    url: 'https://ridibooks.com',
+  })
 
-  return result.groups.token
+  return value
+}
+
+export async function getBearerToken() {
+  const { data } = await fetch(`${API_HOST}/users/me/notification-token/`, {
+    credentials: 'include',
+  })
+
+  return data.token
 }
 
 export async function postNotification(init) {
@@ -24,20 +34,20 @@ export async function postNotification(init) {
   await fetch(`${API_HOST}/notification`, {
     ...init,
     method: 'POST',
-    body: formData
+    body: formData,
   })
 }
 
-export async function getNotification(limit = 5) {
-  const token = await getBearerToken()
-  const init = {
-    headers: { authorization: `Bearer ${token}` }
-  }
-  const response = await fetch(`${API_HOST}/notification?limit=${limit}`, init)
+export async function getNotification({ limit = 100 }) {
+  const token = await getTokenByBrowserCookie()
+  const headers = { authorization: `Bearer ${token}` }
+  const response = await fetch(`${API_HOST}/notification?limit=${limit}`, {
+    headers,
+  })
   const data = await response.json()
 
   if (data.unreadCount > 0) {
-    await postNotification(init)
+    await postNotification({ headers })
   }
 
   return data

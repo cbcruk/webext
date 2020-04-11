@@ -2,12 +2,12 @@ import browser from 'webextension-polyfill'
 import {
   renderWarning,
   renderCount,
-  renderError
+  renderError,
 } from '@cbcruk/webext-lib/badge'
 import localStore from '@cbcruk/webext-lib/local-store'
 import { openTab } from '@cbcruk/webext-lib/tabs-service'
 import { renderIcon } from '@cbcruk/webext-lib/icon'
-import { getNotificationUnreadCount } from './api'
+import { getNotificationUnreadCount, getNotification } from './api'
 
 async function scheduleNextAlarm(interval) {
   const intervalSetting = (await localStore.get('interval')) || 60
@@ -93,6 +93,14 @@ function handleConnectionStatus() {
   }
 }
 
+async function handleMessage({ payload }) {
+  await update()
+
+  const { notifications } = await getNotification(payload)
+
+  await localStore.set('notifications', notifications)
+}
+
 async function init() {
   window.addEventListener('online', handleConnectionStatus)
   window.addEventListener('offline', handleConnectionStatus)
@@ -101,7 +109,7 @@ async function init() {
   browser.alarms.create({ when: Date.now() + 2000 })
 
   browser.browserAction.onClicked.addListener(handleBrowserActionClick)
-  browser.runtime.onMessage.addListener(update)
+  browser.runtime.onMessage.addListener(handleMessage)
 
   update()
 }

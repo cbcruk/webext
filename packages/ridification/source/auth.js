@@ -1,17 +1,20 @@
-import browser from 'webextension-polyfill'
+const { chrome } = window
 
-export const UPDATE_AUTHORIZATION = 'UPDATE_AUTHORIZATION'
+const UPDATE = 'UPDATE'
 
 function main() {
-  const nextDataScript = document.getElementById('__NEXT_DATA__')
-  const NEXT_DATA = nextDataScript
-    ? JSON.parse(nextDataScript.innerText)
-    : { query: {} }
-  const isLogin = NEXT_DATA.query.is_login === 'true'
+  const { __NEXT_DATA__ } = window
+  const { query } = JSON.parse(__NEXT_DATA__.innerText)
+  const isLogin = query.is_login === 'true'
 
-  browser.runtime.sendMessage({
-    type: UPDATE_AUTHORIZATION,
-    isLogin
+  chrome.runtime.sendMessage({
+    type: UPDATE,
+    payload: {
+      isLogin,
+    },
   })
 }
-main()
+
+if (location.search === '?from=ext') {
+  main()
+}
