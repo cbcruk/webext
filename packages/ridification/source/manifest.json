@@ -21,13 +21,6 @@
   },
   "browser_action": {
     "default_icon": "icon-toolbar-gray.png",
-    "default_title": "ridibooks",
-    "default_popup": "popup.html"
-  },
-  "content_scripts": [
-    {
-      "matches": ["https://ridibooks.com/*"],
-      "js": ["auth.js"]
-    }
-  ]
+    "default_title": "ridibooks"
+  }
 }

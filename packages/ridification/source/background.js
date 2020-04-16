@@ -7,7 +7,7 @@ import {
 import localStore from '@cbcruk/webext-lib/local-store'
 import { openTab } from '@cbcruk/webext-lib/tabs-service'
 import { renderIcon } from '@cbcruk/webext-lib/icon'
-import { getNotificationUnreadCount, getNotification } from './api'
+import { getNotificationUnreadCount } from './api'
 
 async function scheduleNextAlarm(interval) {
   const intervalSetting = (await localStore.get('interval')) || 60
@@ -30,16 +30,11 @@ async function handleLastModified(newLastModified) {
   }
 }
 
-async function getNotificationCount() {
-  const data = await getNotificationUnreadCount()
-  await localStore.set('unreadCount', data.count)
-  await localStore.set('success', data.success)
-
-  return data
-}
-
 async function updateNotificationCount() {
-  const { count, success } = await getNotificationCount()
+  const { count, success } = await getNotificationUnreadCount()
+
+  await localStore.set('unreadCount', count)
+  await localStore.set('success', success)
 
   scheduleNextAlarm()
 
@@ -93,14 +88,6 @@ function handleConnectionStatus() {
   }
 }
 
-async function handleMessage({ payload }) {
-  await update()
-
-  const { notifications } = await getNotification(payload)
-
-  await localStore.set('notifications', notifications)
-}
-
 async function init() {
   window.addEventListener('online', handleConnectionStatus)
   window.addEventListener('offline', handleConnectionStatus)
@@ -109,7 +96,6 @@ async function init() {
   browser.alarms.create({ when: Date.now() + 2000 })
 
   browser.browserAction.onClicked.addListener(handleBrowserActionClick)
-  browser.runtime.onMessage.addListener(handleMessage)
 
   update()
 }

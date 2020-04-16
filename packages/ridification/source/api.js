@@ -1,5 +1,3 @@
-import browser from 'webextension-polyfill'
-
 const DEFAULT_HOST = 'https://ridibooks.com'
 const API_HOST = 'https://store-api.ridibooks.com'
 
@@ -8,15 +6,6 @@ export async function getNotificationUnreadCount() {
   const data = await response.json()
 
   return data
-}
-
-export async function getTokenByBrowserCookie() {
-  const { value } = await browser.cookies.get({
-    name: 'ridi_notification_token',
-    url: 'https://ridibooks.com',
-  })
-
-  return value
 }
 
 export async function getBearerToken() {
@@ -38,17 +27,14 @@ export async function postNotification(init) {
   })
 }
 
-export async function getNotification({ limit = 100 }) {
-  const token = await getTokenByBrowserCookie()
+export async function getNotification({ token = '', limit = 100 }) {
   const headers = { authorization: `Bearer ${token}` }
   const response = await fetch(`${API_HOST}/notification?limit=${limit}`, {
     headers,
   })
   const data = await response.json()
 
-  if (data.unreadCount > 0) {
-    await postNotification({ headers })
-  }
+  await postNotification({ headers })
 
   return data
 }
