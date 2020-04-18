@@ -51,9 +51,9 @@ async function updateNotificationCount() {
 async function handleBrowserActionClick() {
   const url = 'https://ridibooks.com/notification'
 
-  await openTab(url)
-
   renderCount(0)
+
+  await openTab(url)
 }
 
 function handleError(error) {

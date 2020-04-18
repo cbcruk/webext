@@ -6,6 +6,5 @@ module.exports = (_env, { mode }) =>
       background: './source/background',
       options: './source/options',
       popup: './source/popup',
-      auth: './source/auth'
-    }
+    },
   })
