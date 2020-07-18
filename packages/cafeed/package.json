@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@cbcruk/webext-lib": "0.0.0",
-    "lodash": "^4.17.15"
+    "lodash": "^4.17.19"
   },
   "devDependencies": {
     "@cbcruk/webext-build": "0.0.0"
