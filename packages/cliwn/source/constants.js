@@ -1,0 +1,1 @@
+export const LAST_UPDATED_ID = 'LAST_UPDATED_ID'
