@@ -37,7 +37,10 @@ async function getNotificationCount() {
     const lastUpdatedIndex = posts.findIndex(
       (post) => post.boardSn === lastUpdatedId
     )
-    const count = posts.filter((_, index) => index < lastUpdatedIndex).length
+    const count =
+      lastUpdatedIndex !== -1
+        ? posts.filter((_, index) => index < lastUpdatedIndex).length
+        : `${posts.length}+`
 
     await localStore.set('unreadCount', count)
     await localStore.set('success', true)
