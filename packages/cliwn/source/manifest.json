@@ -13,7 +13,7 @@
     "notifications",
     "tabs",
     "cookies",
-    "*://*.clien.net/"
+    "https://www.clien.net/"
   ],
   "background": {
     "persistent": false,
@@ -23,5 +23,9 @@
     "default_icon": "icon-toolbar.png",
     "default_title": "cliwn",
     "default_popup": "popup.html"
+  },
+  "options_ui": {
+    "page": "options.html",
+    "browser_style": true
   }
 }

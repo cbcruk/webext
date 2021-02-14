@@ -5,6 +5,7 @@ module.exports = (_env, { mode }) => {
     entry: {
       background: './source/background',
       popup: './source/popup',
+      options: './source/options',
     },
   })
 }

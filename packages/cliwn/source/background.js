@@ -7,14 +7,18 @@ import {
 import localStore from '@cbcruk/webext-lib/local-store'
 import { renderIcon } from '@cbcruk/webext-lib/icon'
 import { getPosts } from './rpc'
-import { LAST_UPDATED_ID } from './constants'
+import {
+  LOCALSTORE_INTERVAL,
+  LOCALSTORE_KEYWORDS,
+  LOCALSTORE_NOTIFICATIONS,
+} from './constants'
 
 async function scheduleNextAlarm(interval) {
-  const intervalSetting = (await localStore.get('interval')) || 60
+  const intervalSetting = (await localStore.get(LOCALSTORE_INTERVAL)) || 60
   const intervalValue = interval || 60
 
   if (intervalSetting !== intervalValue) {
-    await localStore.set('interval', intervalValue)
+    await localStore.set(LOCALSTORE_INTERVAL, intervalValue)
   }
 
   const delayInMinutes = Math.max(Math.ceil(intervalValue / 60), 1)
@@ -22,51 +26,29 @@ async function scheduleNextAlarm(interval) {
   browser.alarms.create({ delayInMinutes })
 }
 
-async function handleLastModified(newLastModified) {
-  const lastModified = (await localStore.get('lastModified')) || new Date(0)
-
-  if (newLastModified !== lastModified) {
-    await localStore.set('lastModified', new Date())
-  }
-}
-
-async function getNotificationCount() {
+async function getNotification() {
   try {
     const posts = await getPosts()
-    const lastUpdatedId = await localStore.get(LAST_UPDATED_ID)
-    const lastUpdatedIndex = posts.findIndex(
-      (post) => post.boardSn === lastUpdatedId
-    )
-    const count =
-      lastUpdatedIndex !== -1
-        ? posts.filter((_, index) => index < lastUpdatedIndex).length
-        : `${posts.length}+`
+    const keywords = (await localStore.get(LOCALSTORE_KEYWORDS)) || []
+    const result = posts.filter((post) => {
+      return keywords.find((keyword) => post.subject.includes(keyword))
+    })
 
-    await localStore.set('unreadCount', count)
-    await localStore.set('success', true)
-
-    return {
-      success: true,
-      count,
-    }
+    await update(LOCALSTORE_NOTIFICATIONS, result, 'boardSn')
   } catch (error) {
-    await localStore.set('success', false)
+    console.error(error)
   }
 }
 
 async function updateNotificationCount() {
-  const { count, success } = await getNotificationCount()
+  await getNotification()
 
-  scheduleNextAlarm()
-
-  if (!success) {
-    renderIcon('default')
-    return
-  }
+  const notifications = (await localStore.get(LOCALSTORE_NOTIFICATIONS)) || []
 
   renderIcon('active')
-  renderCount(count)
-  handleLastModified()
+  renderCount(notifications.length)
+
+  scheduleNextAlarm()
 }
 
 function handleError(error) {
