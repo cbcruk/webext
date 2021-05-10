@@ -10,7 +10,7 @@
   "dependencies": {
     "@cbcruk/webext-lib": "0.0.0",
     "dayjs": "^1.8.34",
-    "lodash": "^4.17.19"
+    "lodash": "^4.17.21"
   },
   "devDependencies": {
     "@cbcruk/webext-build": "0.0.0"
