@@ -2,7 +2,7 @@ import browser from 'webextension-polyfill'
 import {
   renderWarning,
   renderCount,
-  renderError
+  renderError,
 } from '@cbcruk/webext-lib/badge'
 import localStore from '@cbcruk/webext-lib/local-store'
 import { renderIcon } from '@cbcruk/webext-lib/icon'
@@ -39,7 +39,7 @@ async function getNotificationCount() {
 
   return {
     success,
-    count
+    count,
   }
 }
 
@@ -91,8 +91,10 @@ function handleConnectionStatus() {
 }
 
 async function init() {
-  window.addEventListener('online', handleConnectionStatus)
-  window.addEventListener('offline', handleConnectionStatus)
+  self.addEventListener('online', handleConnectionStatus)
+  self.addEventListener('offline', handleConnectionStatus)
+
+  browser.alarms.create({ delayInMinutes: 1 })
 
   browser.alarms.onAlarm.addListener(update)
   browser.alarms.create({ when: Date.now() + 2000 })

@@ -21,9 +21,9 @@ function getErrorData(error) {
 }
 
 function render(text, color, title) {
-  browser.browserAction.setBadgeText({ text })
-  browser.browserAction.setBadgeBackgroundColor({ color })
-  browser.browserAction.setTitle({ title })
+  browser.action.setBadgeText({ text })
+  browser.action.setBadgeBackgroundColor({ color })
+  browser.action.setTitle({ title })
 }
 
 export function renderCount(count) {

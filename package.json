@@ -4,17 +4,17 @@
     "packages/*"
   ],
   "dependencies": {
-    "emotion": "^10.0.27",
-    "htm": "^3.0.3",
-    "preact": "^10.3.3",
-    "webextension-polyfill": "^0.6.0"
+    "emotion": "^11.0.0",
+    "htm": "^3.1.0",
+    "preact": "^10.6.2",
+    "webextension-polyfill": "^0.8.0"
   },
   "devDependencies": {
-    "@types/chrome": "0.0.99",
-    "eslint": "^6.8.0",
-    "web-ext": "^4.1.0",
-    "webpack": "^4.42.0",
-    "webpack-cli": "^3.3.11"
+    "@types/chrome": "0.0.166",
+    "eslint": "^8.4.0",
+    "web-ext": "^6.6.0",
+    "webpack": "^5.64.4",
+    "webpack-cli": "^4.9.1"
   },
   "scripts": {
     "lint": "eslint packages"
